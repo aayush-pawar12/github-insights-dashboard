@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# SQLite database (created at runtime)
+insights.db
+*.sqlite
+
+# Node (only used to build the Word doc)
+node_modules/
+package-lock.json
+package.json

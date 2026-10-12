@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Insights Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◴</span>
+      <div>
+        <h1>GitHub Insights Dashboard</h1>
+        <p class="sub">Live repository metrics &amp; your saved observations</p>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="saved">Saved Insights <span id="savedCount" class="pill">0</span></button>
+    </nav>
+  </header>
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <main id="dashboard" class="view active">
+    <section class="controls">
+      <form id="searchForm" class="search">
+        <input id="account" type="text" placeholder="GitHub user or org (e.g. vercel)"
+               value="vercel" autocomplete="off" />
+        <button type="submit" class="btn primary">Load</button>
+        <button type="button" id="refreshBtn" class="btn ghost" title="Refresh data">⟳ Refresh</button>
+      </form>
+      <p id="dataMeta" class="meta"></p>
+    </section>
+
+    <!-- loading -->
+    <div id="loading" class="state hidden">
+      <div class="spinner"></div><p>Fetching live data from GitHub…</p>
+    </div>
+
+    <!-- error -->
+    <div id="error" class="state error hidden">
+      <p id="errorMsg"></p>
+      <button id="retryBtn" class="btn">Try again</button>
+    </div>
+
+    <!-- content -->
+    <div id="content" class="hidden">
+      <section class="kpis" id="kpis"></section>
+
+      <section class="insight-banner" id="insightBanner"></section>
+
+      <section class="charts">
+        <div class="card">
+          <h3>Top repositories by stars</h3>
+          <canvas id="starsChart" height="150"></canvas>
+        </div>
+        <div class="card">
+          <h3>Language distribution</h3>
+          <canvas id="langChart" height="150"></canvas>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h3>Repositories</h3>
+          <input id="repoFilter" class="mini-search" type="text" placeholder="Filter repos…" />
+        </div>
+        <div class="table-wrap">
+          <table id="repoTable">
+            <thead>
+              <tr>
+                <th>Repository</th><th class="num">Stars</th><th class="num">Forks</th>
+                <th class="num">Issues</th><th>Language</th><th>Last push</th><th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== SAVED INSIGHTS ===================== -->
+  <main id="saved" class="view">
+    <section class="controls">
+      <div class="filters">
+        <select id="filterPriority">
+          <option value="">All priorities</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <select id="sortOrder">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="priority">By priority</option>
+        </select>
+        <input id="insightSearch" type="text" placeholder="Search notes or items…" />
+      </div>
+      <p id="savedStats" class="meta"></p>
+    </section>
+
+    <div id="savedEmpty" class="state hidden">
+      <p>No saved insights yet. Open the Dashboard, pick a repository, and click <b>+ Note</b>.</p>
+    </div>
+    <section id="savedList" class="saved-list"></section>
+  </main>
+
+  <!-- ===================== MODAL ===================== -->
+  <div id="modal" class="modal-backdrop hidden">
+    <div class="modal">
+      <h3 id="modalTitle">Add insight</h3>
+      <p id="modalItem" class="modal-item"></p>
+      <label>Note
+        <textarea id="noteInput" rows="4" placeholder="What did you observe about this item?"></textarea>
+      </label>
+      <label>Priority
+        <select id="priorityInput">
+          <option value="High">High</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </label>
+      <p id="modalError" class="modal-error hidden"></p>
+      <div class="modal-actions">
+        <button id="cancelModal" class="btn ghost">Cancel</button>
+        <button id="saveModal" class="btn primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+</body>
+</html>
