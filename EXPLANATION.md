@@ -26,6 +26,11 @@ save and manage your own insights on top of it.**
 - **Saved-insights view:** a dedicated tab showing item name, note content,
   priority (colour-coded), and timestamp.
 - **Full CRUD:** Create and Read (required) plus Update and Delete (bonus).
+- **Paginated repositories:** results are ranked and shown eight per page with a
+  numbered pager, so the table stays readable instead of dumping every repo.
+- **Refined editorial UI:** a warm, minimal design (cream canvas, coral accents,
+  generous spaced type) with count-up KPIs, a sliding tab indicator, staggered
+  reveals, and animated charts — built with CSS and anime.js.
 - **Filter & search** saved insights by priority, free text, and sort order.
 - **Graceful API failure handling:** unknown accounts, rate limits, timeouts and
   outages each produce a specific, friendly message — never a broken screen.
@@ -39,6 +44,8 @@ save and manage your own insights on top of it.**
 | External API | **GitHub REST API** | Free, no key needed, rich structured data |
 | HTTP client | **requests** | Robust server-side fetching with timeouts |
 | Frontend | **Vanilla JS + Chart.js** | No build step; Chart.js for clean visuals |
+| Animation | **anime.js + CSS** | Count-ups, staggered reveals, paginated rows |
+| Type | **Space Grotesk + Inter** | Editorial display + readable body |
 | Tests | **pytest** | 10 tests across DB, transform, and HTTP layers |
 
 The GitHub call is **proxied server-side** rather than called from the browser.
@@ -90,25 +97,29 @@ Browser (dashboard)  ──►  Flask  ──►  GitHub API        (live metric
 11,888 open issues, an average of 5,277 stars per repo, TypeScript as the primary
 language across 10 languages, and `vercel/next.js` as the most-starred repo.
 
-*The dashboard — live metrics, derived insights, and charts:*
+*The dashboard — count-up KPI tiles and derived insights on a warm, editorial canvas:*
 
 ![Dashboard](docs_assets/01_dashboard.jpg)
 
+*Charts — top repositories by stars and language distribution, in the brand palette:*
+
+![Charts](docs_assets/02_charts.jpg)
+
+*Paginated repositories — ranked, eight per page with a numbered pager:*
+
+![Repositories](docs_assets/03_repos_paged.jpg)
+
 *Saving an insight (note + priority) against a repository:*
 
-![Add note](docs_assets/02_add_note_modal.jpg)
+![Add note](docs_assets/05_add_note_modal.jpg)
 
 *The saved-insights view — item, note, priority, timestamp, with Edit/Delete:*
 
-![Saved insights](docs_assets/03_saved_insights.jpg)
-
-*Filtering saved insights by priority:*
-
-![Filter](docs_assets/04_filter_high.jpg)
+![Saved insights](docs_assets/04_saved_insights.jpg)
 
 *Graceful error state for an unknown account:*
 
-![Error state](docs_assets/05_error_state.jpg)
+![Error state](docs_assets/06_error_state.jpg)
 
 ## 7. Design decisions
 

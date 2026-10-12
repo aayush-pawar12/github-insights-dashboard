@@ -4,44 +4,63 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GitHub Insights Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
+  <!-- animated aurora background -->
+  <div class="aurora">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <div class="grid-overlay"></div>
+  </div>
+
   <header class="topbar">
     <div class="brand">
-      <span class="logo">◴</span>
+      <span class="logo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg></span>
       <div>
-        <h1>GitHub Insights Dashboard</h1>
-        <p class="sub">Live repository metrics &amp; your saved observations</p>
+        <h1 class="gradient-text">GitHub Insights</h1>
+        <p class="sub">Live repository intelligence &amp; saved observations</p>
       </div>
     </div>
-    <nav class="tabs">
-      <button class="tab active" data-tab="dashboard">Dashboard</button>
-      <button class="tab" data-tab="saved">Saved Insights <span id="savedCount" class="pill">0</span></button>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="dashboard"><span>Dashboard</span></button>
+      <button class="tab" data-tab="saved"><span>Saved</span><span id="savedCount" class="pill">0</span></button>
+      <span class="tab-indicator" id="tabIndicator"></span>
     </nav>
   </header>
 
   <!-- ===================== DASHBOARD ===================== -->
   <main id="dashboard" class="view active">
-    <section class="controls">
+    <section class="hero reveal">
+      <div class="hero-text">
+        <h2>Explore any developer or organisation</h2>
+        <p>Type a GitHub handle to pull live stars, forks, issues and language trends.</p>
+      </div>
       <form id="searchForm" class="search">
-        <input id="account" type="text" placeholder="GitHub user or org (e.g. vercel)"
-               value="vercel" autocomplete="off" />
-        <button type="submit" class="btn primary">Load</button>
-        <button type="button" id="refreshBtn" class="btn ghost" title="Refresh data">⟳ Refresh</button>
+        <div class="input-wrap">
+          <span class="at">@</span>
+          <input id="account" type="text" placeholder="vercel" value="vercel" autocomplete="off" spellcheck="false" />
+        </div>
+        <button type="submit" class="btn primary"><span>Load</span></button>
+        <button type="button" id="refreshBtn" class="btn ghost" title="Refresh"><span class="refresh-ico">⟳</span></button>
       </form>
-      <p id="dataMeta" class="meta"></p>
     </section>
+    <p id="dataMeta" class="meta"></p>
 
     <!-- loading -->
     <div id="loading" class="state hidden">
-      <div class="spinner"></div><p>Fetching live data from GitHub…</p>
+      <div class="orbit"><span></span><span></span><span></span></div>
+      <p>Pulling live data from GitHub…</p>
     </div>
 
     <!-- error -->
     <div id="error" class="state error hidden">
+      <div class="err-icon">!</div>
       <p id="errorMsg"></p>
       <button id="retryBtn" class="btn">Try again</button>
     </div>
@@ -49,43 +68,43 @@
     <!-- content -->
     <div id="content" class="hidden">
       <section class="kpis" id="kpis"></section>
-
       <section class="insight-banner" id="insightBanner"></section>
 
       <section class="charts">
-        <div class="card">
-          <h3>Top repositories by stars</h3>
+        <div class="card chart-card reveal">
+          <h3><span class="dot"></span>Top repositories by stars</h3>
           <canvas id="starsChart" height="150"></canvas>
         </div>
-        <div class="card">
-          <h3>Language distribution</h3>
+        <div class="card chart-card reveal">
+          <h3><span class="dot"></span>Language distribution</h3>
           <canvas id="langChart" height="150"></canvas>
         </div>
       </section>
 
-      <section class="card">
+      <section class="card reveal">
         <div class="card-head">
-          <h3>Repositories</h3>
-          <input id="repoFilter" class="mini-search" type="text" placeholder="Filter repos…" />
+          <h3><span class="dot"></span>Repositories <span id="repoTotal" class="count-chip">0</span></h3>
+          <input id="repoFilter" class="mini-search" type="text" placeholder="Filter repositories…" />
         </div>
         <div class="table-wrap">
           <table id="repoTable">
             <thead>
               <tr>
-                <th>Repository</th><th class="num">Stars</th><th class="num">Forks</th>
+                <th class="rank">#</th><th>Repository</th><th class="num">Stars</th><th class="num">Forks</th>
                 <th class="num">Issues</th><th>Language</th><th>Last push</th><th></th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
+        <div class="pager" id="pager"></div>
       </section>
     </div>
   </main>
 
-  <!-- ===================== SAVED INSIGHTS ===================== -->
+  <!-- ===================== SAVED ===================== -->
   <main id="saved" class="view">
-    <section class="controls">
+    <section class="controls reveal">
       <div class="filters">
         <select id="filterPriority">
           <option value="">All priorities</option>
@@ -104,7 +123,8 @@
     </section>
 
     <div id="savedEmpty" class="state hidden">
-      <p>No saved insights yet. Open the Dashboard, pick a repository, and click <b>+ Note</b>.</p>
+      <div class="empty-ill">◔</div>
+      <p>No saved insights yet. Open the <b>Dashboard</b>, pick a repository, and hit <b>+ Note</b>.</p>
     </div>
     <section id="savedList" class="saved-list"></section>
   </main>
@@ -118,16 +138,16 @@
         <textarea id="noteInput" rows="4" placeholder="What did you observe about this item?"></textarea>
       </label>
       <label>Priority
-        <select id="priorityInput">
-          <option value="High">High</option>
-          <option value="Medium" selected>Medium</option>
-          <option value="Low">Low</option>
-        </select>
+        <div class="pri-pick" id="priPick">
+          <button type="button" data-v="High">High</button>
+          <button type="button" data-v="Medium" class="on">Medium</button>
+          <button type="button" data-v="Low">Low</button>
+        </div>
       </label>
       <p id="modalError" class="modal-error hidden"></p>
       <div class="modal-actions">
-        <button id="cancelModal" class="btn ghost">Cancel</button>
-        <button id="saveModal" class="btn primary">Save</button>
+        <button id="cancelModal" class="btn ghost"><span>Cancel</span></button>
+        <button id="saveModal" class="btn primary"><span>Save insight</span></button>
       </div>
     </div>
   </div>
