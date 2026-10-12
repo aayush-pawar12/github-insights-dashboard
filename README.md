@@ -64,6 +64,22 @@ Run the tests:
 python -m pytest -q        # -> 10 passed
 ```
 
+## Deploy (Render — free)
+
+This repo includes a `render.yaml` blueprint, a `Procfile`, and `runtime.txt`, so
+it deploys as a free web service with no extra config:
+
+1. Push to GitHub (already done).
+2. On [render.com](https://render.com), sign in with GitHub → **New + → Blueprint**.
+3. Pick this repository and click **Apply**. Render builds and gives you a public
+   `https://…onrender.com` URL.
+
+Notes: the free tier sleeps after ~15 min of inactivity (first request then takes
+~30–60 s to wake), and its filesystem is ephemeral, so the SQLite insights reset
+on redeploy. For persistence, attach a paid disk or point `INSIGHTS_DB` at a
+managed database. Optionally set a `GITHUB_TOKEN` env var in the Render dashboard
+to raise the API rate limit.
+
 ## API endpoints
 
 | Method | Path                     | Purpose                          |
