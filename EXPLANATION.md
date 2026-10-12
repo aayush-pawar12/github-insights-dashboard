@@ -45,7 +45,7 @@ save and manage your own insights on top of it.**
 | HTTP client | **requests** | Robust server-side fetching with timeouts |
 | Frontend | **Vanilla JS + Chart.js** | No build step; Chart.js for clean visuals |
 | Animation | **anime.js + CSS** | Count-ups, staggered reveals, paginated rows |
-| Type | **Space Grotesk + Inter** | Editorial display + readable body |
+| Type | **Fraunces (serif) + Inter** | Editorial serif display + readable body |
 | Tests | **pytest** | 10 tests across DB, transform, and HTTP layers |
 
 The GitHub call is **proxied server-side** rather than called from the browser.

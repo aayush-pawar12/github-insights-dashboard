@@ -15,6 +15,8 @@
   --radius: 4px;
   --shadow: 0 12px 34px rgba(60, 50, 40, 0.10);
   --shadow-sm: 0 4px 14px rgba(60, 50, 40, 0.07);
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -25,7 +27,7 @@ body {
   line-height: 1.6; overflow-x: hidden; min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3, .display { font-family: "Space Grotesk", "Inter", sans-serif; font-weight: 500; }
+h1, h2, h3, .display { font-family: var(--serif); font-weight: 500; }
 
 /* ---------- soft paper background ---------- */
 .aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden;
@@ -50,7 +52,7 @@ h1, h2, h3, .display { font-family: "Space Grotesk", "Inter", sans-serif; font-w
 .brand { display: flex; align-items: center; gap: 15px; }
 .logo { width: 42px; height: 42px; display: grid; place-items: center; color: #fff;
   background: var(--coral); border-radius: 50%; }
-.topbar h1 { font-size: 17px; margin: 0; letter-spacing: .28em; text-transform: uppercase; font-weight: 600; }
+.topbar h1 { font-size: 22px; margin: 0; letter-spacing: .04em; font-weight: 600; font-style: italic; }
 .gradient-text { color: var(--ink); }
 .gradient-text::first-letter { color: var(--coral); }
 .sub { margin: 2px 0 0; color: var(--muted); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
@@ -124,19 +126,19 @@ h1, h2, h3, .display { font-family: "Space Grotesk", "Inter", sans-serif; font-w
 .kpi .k-label { color: var(--muted); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
 .kpi .k-icon { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; font-size: 11px;
   background: rgba(232,90,79,.12); color: var(--coral); }
-.kpi .k-value { font-family: "Space Grotesk"; font-size: 34px; font-weight: 500; margin-top: 12px; letter-spacing: -.02em; color: var(--ink); }
+.kpi .k-value { font-family: var(--serif); font-size: 34px; font-weight: 500; margin-top: 12px; letter-spacing: -.02em; color: var(--ink); }
 
 /* ---------- insight banner ---------- */
 .insight-banner { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 28px; }
 .ib { position: relative; border-radius: var(--radius); padding: 18px 20px; background: var(--paper);
   border: 1px solid var(--line); border-left: 3px solid var(--coral); }
 .ib .ib-label { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .14em; }
-.ib .ib-value { font-family: "Space Grotesk"; font-size: 17px; font-weight: 500; margin-top: 6px; color: var(--ink); }
+.ib .ib-value { font-family: var(--serif); font-size: 17px; font-weight: 500; margin-top: 6px; color: var(--ink); }
 
 /* ---------- charts & cards ---------- */
 .charts { display: grid; grid-template-columns: 1.45fr 1fr; gap: 20px; margin-bottom: 20px; }
 .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
-.card h3 { margin: 0 0 18px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; color: var(--ink-soft); font-weight: 600; }
+.card h3 { margin: 0 0 18px; font-family: var(--sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; color: var(--ink-soft); font-weight: 600; }
 .card h3 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
 .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
 .card-head h3 { margin: 0; }
@@ -157,7 +159,7 @@ tbody tr:hover { background: var(--paper-2); }
 td.rank .rnum { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-size: 11px; font-weight: 600;
   background: var(--paper-2); color: var(--muted); border: 1px solid var(--line); font-variant-numeric: tabular-nums; }
 td.rank .rnum.top3 { color: #fff; background: var(--coral); border-color: var(--coral); }
-.repo-name { font-weight: 600; font-family: "Space Grotesk"; }
+.repo-name { font-weight: 600; font-family: var(--serif); }
 .repo-name a { color: var(--ink); text-decoration: none; }
 .repo-name a:hover { color: var(--coral); }
 .repo-desc { color: var(--muted); font-size: 12px; max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; font-family: "Inter"; font-weight: 400; }
@@ -182,7 +184,7 @@ td.rank .rnum.top3 { color: #fff; background: var(--coral); border-color: var(--
 .stripe.High { background: var(--coral); }
 .stripe.Medium { background: var(--sand); }
 .stripe.Low { background: var(--stone); }
-.insight-card .i-item { font-family: "Space Grotesk"; font-weight: 500; font-size: 15px; }
+.insight-card .i-item { font-family: var(--serif); font-weight: 500; font-size: 15px; }
 .insight-card .i-item a { color: var(--coral); text-decoration: none; }
 .insight-card .i-item a:hover { color: var(--ink); }
 .insight-card .i-note { margin: 7px 0; color: var(--ink-soft); }
@@ -198,8 +200,8 @@ td.rank .rnum.top3 { color: #fff; background: var(--coral); border-color: var(--
 @keyframes fadeIn { from { opacity: 0; } }
 .modal { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; width: min(470px, 92vw); box-shadow: var(--shadow); animation: modalIn .35s cubic-bezier(.2,.8,.2,1); }
 @keyframes modalIn { from { opacity: 0; transform: translateY(18px); } }
-.modal h3 { margin: 0 0 6px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
-.modal-item { color: var(--coral); font-size: 18px; margin: 0 0 22px; font-weight: 500; font-family: "Space Grotesk"; }
+.modal h3 { margin: 0 0 6px; font-family: var(--sans); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+.modal-item { color: var(--coral); font-size: 18px; margin: 0 0 22px; font-weight: 500; font-family: var(--serif); }
 .modal label { display: block; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
 .modal textarea { width: 100%; margin-top: 10px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); border-radius: var(--radius); padding: 12px 14px; font-size: 14px; font-family: inherit; resize: vertical; outline: none; letter-spacing: 0; text-transform: none; }
 .modal textarea:focus { border-color: var(--coral); }
